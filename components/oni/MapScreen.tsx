@@ -38,6 +38,14 @@ import {
   SPACE,
   STRUCTURES,
 } from "@/lib/oni/palette";
+import {
+  CYCLE_SECONDS,
+  DUPLICANT_OXYGEN,
+  ELECTROLYZER_OXYGEN,
+  ELECTROLYZER_WATER,
+  GAS_GENERATOR,
+  HYDROGEN_GENERATOR,
+} from "@/lib/oni/constants";
 
 // Kinds that are placed devices rather than geysers.
 const DEVICE = new Set(DEVICES);
@@ -64,17 +72,6 @@ const NO_OVERLAYS: Overlay[] = [];
 const ALL_VISIBLE: Record<string, boolean> = {};
 // No layer switches yet, so the address holds none.
 const NO_SWITCHES: Switch[] = [];
-
-// Seconds in a cycle (the game's).
-const CYCLE_SECONDS = 600;
-// The game's values: a duplicant breathes 0.1 kg/s of oxygen; an electrolyzer
-// takes 1 kg/s of water and gives 0.888 kg/s of oxygen; a natural gas
-// generator burns 0.09 kg/s and a hydrogen generator 0.1 kg/s, each for 800 W.
-const DUPLICANT_OXYGEN = 0.1;
-const ELECTROLYZER_WATER = 1;
-const ELECTROLYZER_OXYGEN = 0.888;
-const GAS_GENERATOR = { burn: 0.09, watts: 800 };
-const HYDROGEN_GENERATOR = { burn: 0.1, watts: 800 };
 
 // What a geyser's average feeds, by its type (only types whose output a
 // building takes as it is).

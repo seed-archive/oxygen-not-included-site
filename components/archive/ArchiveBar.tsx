@@ -14,7 +14,7 @@ import Typography from "@mui/material/Typography";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useAuth } from "@seed-archive/ui/auth";
 
-import { TOOLS } from "@/lib/tools";
+import { MENU } from "@/lib/menu";
 
 // The archive's one header (D15): "Seed Archive", a plain link to the domain's
 // root (another zone, so not next/link), then the game's name, a link to this
@@ -23,7 +23,11 @@ export function ArchiveBar() {
   const { signOut, user } = useAuth();
   const intl = useIntl();
   const [accountMenu, setAccountMenu] = useState<HTMLElement | null>(null);
-  const [toolsMenu, setToolsMenu] = useState<HTMLElement | null>(null);
+  // The open dropdown: its section and the button it hangs from.
+  const [section, setSection] = useState<{
+    href: string;
+    el: HTMLElement;
+  } | null>(null);
 
   return (
     <AppBar
@@ -63,41 +67,58 @@ export function ArchiveBar() {
             <FormattedMessage id="archive.game" />
           </Typography>
         </Box>
-        <Button
-          color="inherit"
-          onClick={(event) => setToolsMenu(event.currentTarget)}
-          id="tools-button"
-          aria-haspopup="true"
-          aria-controls={toolsMenu ? "tools-menu" : undefined}
-          aria-expanded={toolsMenu ? "true" : undefined}
-        >
-          <FormattedMessage id="archive.tools" />
-        </Button>
-        <Menu
-          id="tools-menu"
-          anchorEl={toolsMenu}
-          open={Boolean(toolsMenu)}
-          onClose={() => setToolsMenu(null)}
-          slotProps={{ list: { "aria-labelledby": "tools-button" } }}
-        >
-          <MenuItem
-            component={Link}
-            href="/tools"
-            onClick={() => setToolsMenu(null)}
-          >
-            <FormattedMessage id="archive.allTools" />
-          </MenuItem>
-          {TOOLS.map((tool) => (
-            <MenuItem
-              key={tool.href}
-              component={Link}
-              href={tool.href}
-              onClick={() => setToolsMenu(null)}
-            >
-              <FormattedMessage id={tool.id} />
-            </MenuItem>
-          ))}
-        </Menu>
+        {MENU.map((item) => {
+          const key = item.href.slice(1);
+          const open = section?.href === item.href;
+          return (
+            <Box key={item.href}>
+              <Button
+                color="inherit"
+                onClick={(event) =>
+                  setSection({ href: item.href, el: event.currentTarget })
+                }
+                id={`${key}-button`}
+                aria-haspopup="true"
+                aria-controls={open ? `${key}-menu` : undefined}
+                aria-expanded={open ? "true" : undefined}
+              >
+                <FormattedMessage id={item.id} />
+              </Button>
+              <Menu
+                id={`${key}-menu`}
+                anchorEl={open ? section.el : null}
+                open={open}
+                onClose={() => setSection(null)}
+                slotProps={{ list: { "aria-labelledby": `${key}-button` } }}
+              >
+                <MenuItem
+                  component={Link}
+                  href={item.href}
+                  onClick={() => setSection(null)}
+                >
+                  <FormattedMessage
+                    id="archive.all"
+                    values={{
+                      section: intl
+                        .formatMessage({ id: item.id })
+                        .toLowerCase(),
+                    }}
+                  />
+                </MenuItem>
+                {item.pages.map((page) => (
+                  <MenuItem
+                    key={page.href}
+                    component={Link}
+                    href={page.href}
+                    onClick={() => setSection(null)}
+                  >
+                    <FormattedMessage id={page.id} />
+                  </MenuItem>
+                ))}
+              </Menu>
+            </Box>
+          );
+        })}
         {user ? (
           <>
             <IconButton

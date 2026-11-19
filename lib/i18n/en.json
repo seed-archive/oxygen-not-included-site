@@ -11,7 +11,15 @@
     "privacy": "Privacy",
     "terms": "Terms",
     "releaseNotes": "Release notes",
-    "allTools": "All tools"
+    "all": "All {section}",
+    "catalog": "Catalog",
+    "guides": "Guides",
+    "quests": "Quests",
+    "geysers": "Geysers",
+    "choosingASeed": "Choosing a seed",
+    "firstCycles": "First cycles",
+    "geysersGuide": "Geysers",
+    "storyTraits": "Story traits"
   },
   "pages": {
     "notFound": {
@@ -22,6 +30,27 @@
       "title": "Oxygen Not Included seeds",
       "lead": "Oxygen Not Included worlds computed from their seeds. The section is being built.",
       "toMap": "Type a seed on the <link>Oxygen Not Included seed map</link> to see its world."
+    },
+    "catalog": {
+      "geysers": "{link}: every geyser, vent and volcano, what it emits, how hot and how much.",
+      "geyserTable": {
+        "lead": "<b>How much can a geyser give?</b> Each type has a range for its output, its eruptions and its rests; a seed fixes where a geyser of a seed falls in it, and the map shows that.",
+        "name": "Geyser",
+        "element": "Emits",
+        "temperature": "°C",
+        "rate": "kg per cycle",
+        "eruption": "Erupts",
+        "active": "Active, cycles",
+        "random": "Can be random"
+      }
+    },
+    "guides": {
+      "firstCycles": "{link}: what a new colony needs from its world to breathe and eat.",
+      "geysers": "{link}: how much a geyser really gives, the tank for its dormancy, and what it feeds.",
+      "choosingASeed": "{link}: what makes a seed good for a colony, and how to read it on the map."
+    },
+    "quests": {
+      "storyTraits": "{link}: the Gravitas stories a world can hold, and where they come from."
     },
     "tools": {
       "title": "Tools",
